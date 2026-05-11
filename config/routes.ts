@@ -20,67 +20,22 @@
 	// DEFAULT MENU
 	{
 		path: '/dashboard',
-		name: 'Dashboard',
+		name: 'Trang Chủ',
 		component: './TrangChu',
 		icon: 'HomeOutlined',
 	},
-	{
-		path: '/gioi-thieu',
-		name: 'About',
-		component: './TienIch/GioiThieu',
-		hideInMenu: true,
-	},
-	{
-		path: '/random-user',
-		name: 'RandomUser',
-		component: './RandomUser',
-		icon: 'ArrowsAltOutlined',
-	},
-	{
-		path: '/todo-list',
-		name: 'TodoList',
-		icon: 'OrderedListOutlined',
-		component: './TodoList',
-	},
 
-	// DANH MUC HE THONG
+	// TODO: Sau này team tạo module nào thì cứ add thêm vào bên dưới
 	// {
-	// 	name: 'DanhMuc',
-	// 	path: '/danh-muc',
-	// 	icon: 'copy',
-	// 	routes: [
-	// 		{
-	// 			name: 'ChucVu',
-	// 			path: 'chuc-vu',
-	// 			component: './DanhMuc/ChucVu',
-	// 		},
-	// 	],
+	// 	path: '/thu-cung',
+	// 	name: 'Quản Lý Thú Cưng',
+	// 	component: './ThuCung',
+	// 	icon: 'GitlabOutlined',
 	// },
 
 	{
-		path: '/notification',
-		routes: [
-			{
-				path: './subscribe',
-				exact: true,
-				component: './ThongBao/Subscribe',
-			},
-			{
-				path: './check',
-				exact: true,
-				component: './ThongBao/Check',
-			},
-			{
-				path: './',
-				exact: true,
-				component: './ThongBao/NotifOneSignal',
-			},
-		],
-		layout: false,
-		hideInMenu: true,
-	},
-	{
 		path: '/',
+		redirect: '/dashboard',
 	},
 	{
 		path: '/403',

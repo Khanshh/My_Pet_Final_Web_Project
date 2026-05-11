@@ -14,9 +14,9 @@ const Settings: LayoutSettings & {
 	fixedHeader: false,
 	fixSiderbar: true,
 	colorWeak: false,
-	title: 'LẬP TRÌNH WEB - RIPT',
+	title: 'MyPet',
 	pwa: false,
-	logo: '/logo.png',
+	logo: 'https://cdn-icons-png.flaticon.com/512/3565/3565860.png', // Logo bàn chân chó mèo cute có sẵn
 	iconfontUrl: '',
 	headerTheme: 'light',
 	headerHeight: 60,

@@ -1,51 +1,90 @@
-import { useAuthActions } from '@/hooks/useAuthActions';
-import { tenTruongVietTatTiengAnh } from '@/services/base/constant';
-import { DeleteOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
-import { useAuth } from 'react-oidc-context';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, Form, Input, message } from 'antd';
+import React, { useState } from 'react';
+import { history, useModel } from 'umi';
 
-const LoginWithKeycloak = () => {
-	const auth = useAuth();
-	const { isLoading, dangNhap } = useAuthActions();
+// Thông tin đăng nhập tạm thời (hardcode) — thay bằng API khi backend sẵn sàng
+const MOCK_EMAIL = 'admin@gmail.com';
+const MOCK_PASSWORD = '123456';
 
-	const onClearCache = () => {
-		localStorage.clear();
-		sessionStorage.clear();
-		auth.removeUser();
-		window.location.href = '/';
-		// window.location.reload();
+const LoginWithCredentials: React.FC = () => {
+	const [submitting, setSubmitting] = useState(false);
+	const { initialState, setInitialState } = useModel('@@initialState');
+	const [form] = Form.useForm();
+
+	const handleSubmit = async (values: { email: string; password: string }) => {
+		setSubmitting(true);
+		try {
+			// TODO: Thay đoạn này bằng API call tới FastAPI khi backend sẵn sàng
+			// const response = await fetch('/api/auth/login', { method: 'POST', body: JSON.stringify(values) });
+			if (values.email === MOCK_EMAIL && values.password === MOCK_PASSWORD) {
+				// Lưu token tạm, thay bằng token thật từ backend sau
+				localStorage.setItem('token', 'mock-token-mypet');
+				localStorage.setItem(
+					'currentUser',
+					JSON.stringify({
+						email: MOCK_EMAIL,
+						name: 'Admin',
+						preferred_username: 'admin',
+					}),
+				);
+				setInitialState({
+					...initialState,
+					currentUser: {
+						email: MOCK_EMAIL,
+						name: 'Admin',
+						preferred_username: 'admin',
+						sub: 'mock-id',
+						ssoId: 'mock-id',
+						email_verified: true,
+						realm_access: { roles: ['admin'] },
+						given_name: 'Admin',
+						family_name: '',
+						picture: '',
+					},
+					permissionLoading: false,
+				});
+				message.success('Đăng nhập thành công!');
+				history.push('/dashboard');
+			} else {
+				message.error('Email hoặc mật khẩu không đúng!');
+			}
+		} catch {
+			message.error('Đã có lỗi xảy ra, vui lòng thử lại!');
+		} finally {
+			setSubmitting(false);
+		}
 	};
 
-	if (isLoading) {
-		return <div>Đang chuyển tới trang đăng nhập...</div>;
-	}
-
-	if (auth.error) {
-		return (
-			<div>
-				Có lỗi xảy ra... <pre>{auth.error.message}</pre>
-				<Button icon={<DeleteOutlined />} onClick={onClearCache} type='link'>
-					Xóa bộ nhớ đệm
-				</Button>
-			</div>
-		);
-	}
-
 	return (
-		<div>
-			<Button
-				onClick={dangNhap}
-				type='primary'
-				style={{
-					marginTop: 8,
-					width: '100%',
-				}}
-				size='large'
+		<Form form={form} onFinish={handleSubmit} layout="vertical">
+			<Form.Item
+				name="email"
+				rules={[
+					{ required: true, message: 'Vui lòng nhập email!' },
+					{ type: 'email', message: 'Email không hợp lệ!' },
+				]}
 			>
-				Đăng nhập bằng {tenTruongVietTatTiengAnh.toUpperCase()} Connect
+				<Input
+					prefix={<UserOutlined />}
+					placeholder="Nhập email (admin@gmail.com)"
+					size="large"
+				/>
+			</Form.Item>
+
+			<Form.Item name="password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}>
+				<Input.Password
+					prefix={<LockOutlined />}
+					placeholder="Nhập mật khẩu (123456)"
+					size="large"
+				/>
+			</Form.Item>
+
+			<Button type="primary" htmlType="submit" block size="large" loading={submitting}>
+				Đăng nhập
 			</Button>
-		</div>
+		</Form>
 	);
 };
 
-export default LoginWithKeycloak;
+export default LoginWithCredentials;

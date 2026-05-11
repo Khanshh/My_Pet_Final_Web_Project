@@ -1,199 +1,212 @@
 @import '~antd/es/style/themes/default.less';
-@import '../../../styles/_variable.less';
 
 .container {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
+	position: relative;
 	overflow: hidden;
-	background-color: #f0f2f5;
+	/* Nền Gradient mượt mà tone sáng */
+	background: linear-gradient(135deg, #fffaf0 0%, #fff0e0 100%);
 }
 
-.lang {
+.backgroundShapes {
+	position: absolute;
+	top: 0;
+	left: 0;
 	width: 100%;
-	height: 40px;
-	line-height: 44px;
-	text-align: right;
-	:global(.ant-dropdown-trigger) {
-		margin-right: 24px;
+	height: 100%;
+	overflow: hidden;
+	z-index: 0;
+	pointer-events: none;
+
+	.shape1 {
+		position: absolute;
+		top: -10%;
+		left: -10%;
+		width: 60vw;
+		height: 60vw;
+		background: radial-gradient(circle, rgba(251, 177, 23, 0.15) 0%, rgba(251, 177, 23, 0) 70%);
+		border-radius: 50%;
+		animation: float 15s ease-in-out infinite alternate;
+	}
+
+	.shape2 {
+		position: absolute;
+		bottom: -20%;
+		right: -10%;
+		width: 70vw;
+		height: 70vw;
+		background: radial-gradient(circle, rgba(255, 140, 0, 0.1) 0%, rgba(255, 140, 0, 0) 70%);
+		border-radius: 50%;
+		animation: float 20s ease-in-out infinite alternate-reverse;
+	}
+
+	.shape3 {
+		position: absolute;
+		top: 40%;
+		left: 60%;
+		width: 40vw;
+		height: 40vw;
+		background: radial-gradient(circle, rgba(255, 200, 100, 0.1) 0%, rgba(255, 200, 100, 0) 70%);
+		border-radius: 50%;
+		animation: pulse 12s ease-in-out infinite alternate;
+	}
+}
+
+@keyframes float {
+	0% {
+		transform: translateY(0) translateX(0);
+	}
+
+	100% {
+		transform: translateY(50px) translateX(50px);
+	}
+}
+
+@keyframes pulse {
+	0% {
+		transform: scale(1);
+	}
+
+	100% {
+		transform: scale(1.2);
 	}
 }
 
 .content {
 	flex: 1;
 	padding: 32px 12px;
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
 .top {
 	text-align: center;
-	// min-height: 300px;
 }
 
 .header {
-	margin-top: 50px;
-	line-height: 60px;
-	a {
-		text-decoration: none;
-	}
-}
-
-.logo {
-	width: 100%;
-	max-width: 400px;
-	vertical-align: top;
-}
-
-.title2 {
-	position: relative;
-	top: 2px;
-	color: var(--primary-color);
-	font-weight: 600;
-	font-size: 30px;
-	font-family: Avenir, 'Helvetica Neue', Arial, Helvetica, sans-serif;
-}
-
-.title3 {
-	position: relative;
-	top: 2px;
-	color: var(--primary-color);
-	font-weight: 600;
-	font-size: 30px;
-	font-family: Avenir, 'Helvetica Neue', Arial, Helvetica, sans-serif;
-}
-
-.title1 {
-	position: relative;
-	top: 2px;
-	color: @primary-color;
-	font-weight: 600;
-	font-size: 33px;
-	font-family: Avenir, 'Helvetica Neue', Arial, Helvetica, sans-serif;
-}
-
-.desc {
-	margin-top: 12px;
 	margin-bottom: 40px;
-	color: @text-color-secondary;
-	font-size: @font-size-base;
+
+	.logoContainer {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 12px;
+		margin-bottom: 12px;
+
+		.logoIcon {
+			font-size: 54px;
+			line-height: 1;
+			filter: drop-shadow(0 4px 6px rgba(255, 140, 0, 0.3));
+		}
+
+		.logoText {
+			font-size: 54px;
+			font-weight: 900;
+			letter-spacing: -2px;
+			background: linear-gradient(135deg, #ff8c00, #fbb117);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
+		}
+	}
+
+	.subtitle {
+		color: #666;
+		font-size: 17px;
+		font-weight: 500;
+		margin-top: 0;
+		opacity: 0.8;
+	}
 }
 
 .main {
 	position: relative;
-	z-index: 99;
-	width: 440px;
+	width: 420px;
+	max-width: 90%;
 	margin: 0 auto;
-	margin-top: 32px;
-	padding: 24px;
-	background: #fff;
-	border-radius: 4px;
+	padding: 40px 40px 30px;
 
-	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+	/* Hiệu ứng Glassmorphism đỉnh cao */
+	background: rgba(255, 255, 255, 0.6);
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	border: 1px solid rgba(255, 255, 255, 0.8);
+	border-radius: 20px;
+	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
 
-	// &::before {
-	// 	position: absolute;
-	// 	top: -65px;
-	// 	left: -424px;
-	// 	z-index: -1;
-	// 	width: 600px;
-	// 	height: 300px;
-	// 	background-image: url('/frame1.svg');
-	// 	background-size: 100%;
-	// 	content: '';
-	// }
+	transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
 
-	// &::after {
-	// 	position: absolute;
-	// 	top: -56px;
-	// 	right: -443px;
-	// 	z-index: -1;
-	// 	width: 600px;
-	// 	height: 300px;
-	// 	background-image: url('/frame2.svg');
-	// 	background-repeat: no-repeat;
-	// 	background-size: 100%;
-	// 	content: '';
-	// }
+	&:hover {
+		transform: translateY(-8px);
+		box-shadow: 0 30px 60px rgba(251, 177, 23, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+	}
 
-	// @media screen and (max-width: @screen-sm) {
-	// 	max-width: 100%;
-	// 	&::before {
-	// 		display: none;
-	// 	}
-	// 	&::after {
-	// 		top: 300px;
-	// 		right: -66px;
-	// 	}
-	// }
-
+	/* Tuỳ chỉnh sâu vào Ant Design Input & Button để trông Premium gọn gàng hơn */
 	:global {
-		.@{ant-prefix}-tabs-nav-list {
-			margin: auto;
+		.ant-input-affix-wrapper-lg {
+			padding: 12px 18px;
+			border-radius: 12px;
+			background: rgba(255, 255, 255, 0.8);
+			border: 1px solid rgba(0, 0, 0, 0.06);
+			transition: all 0.3s ease;
+
+			.anticon {
+				color: #ff8c00;
+				font-size: 18px;
+			}
+
+			&:hover,
+			&-focused {
+				border-color: #fbb117;
+				box-shadow: 0 0 0 3px rgba(251, 177, 23, 0.15);
+				background: #fff;
+			}
+
+			input {
+				background: transparent;
+				font-weight: 500;
+				letter-spacing: 0.5px;
+			}
+		}
+
+		.ant-form-item-explain-error {
+			margin-top: 6px;
+			font-weight: 500;
+		}
+
+		.ant-btn-primary {
+			height: 52px;
+			border-radius: 12px;
+			font-weight: 700;
 			font-size: 16px;
+			margin-top: 10px;
+			background: linear-gradient(135deg, #fbb117 0%, #ff8c00 100%);
+			border: none;
+			box-shadow: 0 6px 20px rgba(255, 140, 0, 0.3);
+			transition: all 0.3s ease;
+
+			&:hover,
+			&:focus {
+				background: linear-gradient(135deg, #ff9d00 0%, #e67e00 100%);
+				transform: translateY(-2px);
+				box-shadow: 0 8px 25px rgba(255, 140, 0, 0.45);
+			}
+
+			&:active {
+				transform: translateY(1px);
+				box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3);
+			}
 		}
 	}
-
-	.icon {
-		margin-left: 16px;
-		color: rgba(0, 0, 0, 0.2);
-		font-size: 24px;
-		vertical-align: middle;
-		cursor: pointer;
-		transition: color 0.3s;
-
-		&:hover {
-			color: var(--primary-color);
-		}
-	}
-
-	.other {
-		margin-top: 24px;
-		line-height: 22px;
-		text-align: left;
-		.register {
-			float: right;
-		}
-	}
-
-	.prefixIcon {
-		margin-right: 6px;
-		color: var(--primary-color);
-		font-size: @font-size-base;
-	}
 }
 
-@media screen and (max-width: @screen-xl) {
-	.title2 {
-		font-size: 25px;
-	}
-}
-
-@media screen and (max-width: @screen-lg) {
-	.title2 {
-		font-size: 20px;
-	}
-}
-
-@media screen and (max-width: 899px) {
-	.title1 {
-		font-size: 22px;
-	}
-	.title2 {
-		font-size: 18px;
-		line-height: 30px;
-	}
-	.title3 {
-		font-size: 22px;
-	}
-}
-
-@media screen and (max-width: 695px) {
-	.header {
-		margin-bottom: 30px;
-	}
-}
-
-@media screen and (max-width: 377px) {
-	.header {
-		margin-bottom: 80px;
-	}
+.loginFooter {
+	position: relative;
+	z-index: 1;
+	padding-bottom: 24px;
 }
