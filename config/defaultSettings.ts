@@ -16,7 +16,7 @@ const Settings: LayoutSettings & {
 	colorWeak: false,
 	title: 'MyPet',
 	pwa: false,
-	logo: 'https://cdn-icons-png.flaticon.com/512/3565/3565860.png', // Logo bàn chân chó mèo cute có sẵn
+	logo: 'https://cdn-icons-png.flaticon.com/512/3565/3565860.png',
 	iconfontUrl: '',
 	headerTheme: 'light',
 	headerHeight: 60,

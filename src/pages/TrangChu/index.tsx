@@ -1,19 +1,19 @@
 import { Card } from 'antd';
 import './components/style.less';
-import { unitName } from '@/services/base/constant';
 import { useModel } from 'umi';
 
 const TrangChu = () => {
 	const { data } = useModel('randomuser');
 
 	return (
-		<Card bodyStyle={{ height: '100%' }}>
+		<Card bodyStyle={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 			<div className='home-welcome'>
-				<div>
-					<b>{data.length} users</b>
+				<div className='welcome-logo'>🐾</div>
+				<h1 className='title'>Chào mừng đến với MyPet!</h1>
+				<h2 className='sub-title'>Hệ thống quản trị cửa hàng thú cưng hiện đại</h2>
+				<div className='stats-brief'>
+					<b>{data.length} khách hàng</b> đang hoạt động
 				</div>
-				<h1 className='title'>THỰC HÀNH LẬP TRÌNH WEB</h1>
-				<h2 className='sub-title'>{unitName.toUpperCase()}</h2>
 			</div>
 		</Card>
 	);

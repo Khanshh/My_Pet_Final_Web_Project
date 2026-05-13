@@ -1,4 +1,3 @@
-import Footer from '@/components/Footer';
 import RightContent from '@/components/RightContent';
 import { notification } from 'antd';
 import 'moment/locale/vi';
@@ -72,8 +71,6 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
 		noFound: <NotFoundContent />,
 		rightContentRender: () => <RightContent />,
 		disableContentMargin: false,
-
-		footerRender: () => <Footer />,
 
 		onPageChange: () => {
 			// Redirect / về /dashboard nếu đã đăng nhập

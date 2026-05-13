@@ -51,7 +51,7 @@
 	}
 
 	.ant-menu-submenu {
-		& > .ant-menu-submenu-title {
+		&>.ant-menu-submenu-title {
 			padding-right: 24px !important;
 			padding-left: 12px !important;
 			border-radius: 2px;
@@ -63,7 +63,7 @@
 
 		.ant-menu-sub {
 			padding-left: 12px;
-			background-color: #f8f8fa;
+			background-color: #FFF8E7;
 			border-radius: 2px;
 
 			.ant-menu-sub {
@@ -86,7 +86,7 @@
 		}
 
 		.ant-menu-submenu {
-			& > .ant-menu-submenu-title {
+			&>.ant-menu-submenu-title {
 				padding-left: calc(50% - 16px / 2) !important;
 			}
 		}
@@ -94,6 +94,7 @@
 }
 
 .ant-menu-dark.ant-pro-sider-menu {
+
 	.ant-menu-item,
 	.ant-menu-submenu-title {
 		height: auto !important;
@@ -114,6 +115,7 @@
 }
 
 .ant-pro-sider-menu.ant-menu-inline-collapsed {
+
 	.ant-menu-item,
 	.ant-menu-submenu-title {
 		height: 40px !important;
@@ -132,6 +134,7 @@
 
 .ant-layout {
 	min-height: 100vh;
+	background: #FFF8E7;
 }
 
 .ant-pro-sider.ant-layout-sider.ant-pro-sider-fixed {
@@ -139,8 +142,9 @@
 }
 
 // Compatible with IE11
-@media screen and(-ms-high-contrast: active), (-ms-high-contrast: none) {
-	body .ant-design-pro > .ant-layout {
+@media screen and(-ms-high-contrast: active),
+(-ms-high-contrast: none) {
+	body .ant-design-pro>.ant-layout {
 		min-height: 100vh;
 	}
 }

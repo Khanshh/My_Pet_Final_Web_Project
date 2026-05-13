@@ -1,15 +1,27 @@
 @import '~antd/es/style/themes/default.less';
 
+/* ===== Color tokens ===== */
+@bg-main: #FFF8E7;
+@bg-card: #FFFDF7;
+@accent-yellow: #F6D776;
+@hover-yellow: #EFC85B;
+@peach: #F7C8A3;
+@mint: #CFE8D8;
+@pink: #F8D7DA;
+@text-main: #4B4B4B;
+
 .container {
 	display: flex;
-	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 	min-height: 100vh;
 	position: relative;
 	overflow: hidden;
-	/* Nền Gradient mượt mà tone sáng */
-	background: linear-gradient(135deg, #fffaf0 0%, #fff0e0 100%);
+	background: @bg-main;
+	font-family: 'Nunito', 'Segoe UI', sans-serif;
 }
 
+/* ===== Animated Background Shapes ===== */
 .backgroundShapes {
 	position: absolute;
 	top: 0;
@@ -22,35 +34,35 @@
 
 	.shape1 {
 		position: absolute;
-		top: -10%;
+		top: -15%;
 		left: -10%;
-		width: 60vw;
-		height: 60vw;
-		background: radial-gradient(circle, rgba(251, 177, 23, 0.15) 0%, rgba(251, 177, 23, 0) 70%);
+		width: 500px;
+		height: 500px;
+		background: radial-gradient(circle, fade(@peach, 35%) 0%, fade(@peach, 0%) 70%);
 		border-radius: 50%;
-		animation: float 15s ease-in-out infinite alternate;
+		animation: float 18s ease-in-out infinite alternate;
 	}
 
 	.shape2 {
 		position: absolute;
-		bottom: -20%;
-		right: -10%;
-		width: 70vw;
-		height: 70vw;
-		background: radial-gradient(circle, rgba(255, 140, 0, 0.1) 0%, rgba(255, 140, 0, 0) 70%);
+		bottom: -15%;
+		right: -8%;
+		width: 550px;
+		height: 550px;
+		background: radial-gradient(circle, fade(@mint, 40%) 0%, fade(@mint, 0%) 70%);
 		border-radius: 50%;
-		animation: float 20s ease-in-out infinite alternate-reverse;
+		animation: float 22s ease-in-out infinite alternate-reverse;
 	}
 
 	.shape3 {
 		position: absolute;
-		top: 40%;
-		left: 60%;
-		width: 40vw;
-		height: 40vw;
-		background: radial-gradient(circle, rgba(255, 200, 100, 0.1) 0%, rgba(255, 200, 100, 0) 70%);
+		top: 50%;
+		left: 55%;
+		width: 350px;
+		height: 350px;
+		background: radial-gradient(circle, fade(@accent-yellow, 25%) 0%, fade(@accent-yellow, 0%) 70%);
 		border-radius: 50%;
-		animation: pulse 12s ease-in-out infinite alternate;
+		animation: pulse 14s ease-in-out infinite alternate;
 	}
 }
 
@@ -60,153 +72,193 @@
 	}
 
 	100% {
-		transform: translateY(50px) translateX(50px);
+		transform: translateY(40px) translateX(30px);
 	}
 }
 
 @keyframes pulse {
 	0% {
 		transform: scale(1);
+		opacity: 0.6;
 	}
 
 	100% {
-		transform: scale(1.2);
+		transform: scale(1.15);
+		opacity: 1;
 	}
 }
 
-.content {
-	flex: 1;
-	padding: 32px 12px;
+/* ===== Centered Card Wrapper ===== */
+.cardWrapper {
 	position: relative;
 	z-index: 1;
 	display: flex;
-	flex-direction: column;
+	align-items: center;
 	justify-content: center;
+	width: 100%;
+	padding: 24px;
 }
 
-.top {
-	text-align: center;
+.card {
+	width: 100%;
+	max-width: 440px;
+	padding: 48px 40px 32px;
+	background: @bg-card;
+	border-radius: 24px;
+	box-shadow:
+		0 8px 32px rgba(0, 0, 0, 0.06),
+		0 2px 8px rgba(0, 0, 0, 0.04);
+	border: 1px solid rgba(246, 215, 118, 0.25);
+	animation: cardSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+
+	@media (max-width: @screen-xs) {
+		padding: 36px 24px 24px;
+		border-radius: 20px;
+	}
 }
 
+@keyframes cardSlideUp {
+	from {
+		opacity: 0;
+		transform: translateY(30px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* ===== Header / Logo ===== */
 .header {
-	margin-bottom: 40px;
+	text-align: center;
+	margin-bottom: 36px;
+}
 
-	.logoContainer {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		gap: 12px;
-		margin-bottom: 12px;
+.logoContainer {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	margin-bottom: 16px;
+}
 
-		.logoIcon {
-			font-size: 54px;
-			line-height: 1;
-			filter: drop-shadow(0 4px 6px rgba(255, 140, 0, 0.3));
-		}
+.logoIcon {
+	font-size: 48px;
+	line-height: 1;
+	filter: drop-shadow(0 3px 6px rgba(246, 215, 118, 0.4));
+	animation: pawBounce 2s ease-in-out infinite;
+}
 
-		.logoText {
-			font-size: 54px;
-			font-weight: 900;
-			letter-spacing: -2px;
-			background: linear-gradient(135deg, #ff8c00, #fbb117);
-			-webkit-background-clip: text;
-			-webkit-text-fill-color: transparent;
-			filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
-		}
+@keyframes pawBounce {
+
+	0%,
+	100% {
+		transform: translateY(0);
 	}
 
-	.subtitle {
-		color: #666;
-		font-size: 17px;
-		font-weight: 500;
-		margin-top: 0;
-		opacity: 0.8;
+	50% {
+		transform: translateY(-6px);
 	}
 }
 
-.main {
-	position: relative;
-	width: 420px;
-	max-width: 90%;
-	margin: 0 auto;
-	padding: 40px 40px 30px;
+.logoText {
+	font-size: 42px;
+	font-weight: 800;
+	letter-spacing: -1px;
+	color: @hover-yellow;
+	text-shadow: 0 2px 8px rgba(239, 200, 91, 0.25);
+}
 
-	/* Hiệu ứng Glassmorphism đỉnh cao */
-	background: rgba(255, 255, 255, 0.6);
-	backdrop-filter: blur(20px);
-	-webkit-backdrop-filter: blur(20px);
-	border: 1px solid rgba(255, 255, 255, 0.8);
-	border-radius: 20px;
-	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+.subtitle {
+	color: @text-main;
+	font-size: 20px;
+	font-weight: 700;
+	margin: 0 0 4px;
+}
 
-	transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+.desc {
+	color: #888;
+	font-size: 14px;
+	font-weight: 500;
+	margin: 0;
+}
 
-	&:hover {
-		transform: translateY(-8px);
-		box-shadow: 0 30px 60px rgba(251, 177, 23, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.6);
-	}
-
-	/* Tuỳ chỉnh sâu vào Ant Design Input & Button để trông Premium gọn gàng hơn */
+/* ===== Form Area ===== */
+.formArea {
 	:global {
 		.ant-input-affix-wrapper-lg {
-			padding: 12px 18px;
+			padding: 12px 16px;
 			border-radius: 12px;
-			background: rgba(255, 255, 255, 0.8);
-			border: 1px solid rgba(0, 0, 0, 0.06);
+			background: #fff;
+			border: 1.5px solid #eee;
 			transition: all 0.3s ease;
 
 			.anticon {
-				color: #ff8c00;
-				font-size: 18px;
+				color: @accent-yellow;
+				font-size: 17px;
 			}
 
 			&:hover,
 			&-focused {
-				border-color: #fbb117;
-				box-shadow: 0 0 0 3px rgba(251, 177, 23, 0.15);
+				border-color: @accent-yellow;
+				box-shadow: 0 0 0 3px fade(@accent-yellow, 15%);
 				background: #fff;
 			}
 
 			input {
 				background: transparent;
 				font-weight: 500;
-				letter-spacing: 0.5px;
+				color: @text-main;
+				font-family: 'Nunito', 'Segoe UI', sans-serif;
 			}
 		}
 
 		.ant-form-item-explain-error {
-			margin-top: 6px;
+			margin-top: 4px;
 			font-weight: 500;
+			font-size: 13px;
 		}
 
 		.ant-btn-primary {
-			height: 52px;
+			height: 48px;
 			border-radius: 12px;
 			font-weight: 700;
 			font-size: 16px;
-			margin-top: 10px;
-			background: linear-gradient(135deg, #fbb117 0%, #ff8c00 100%);
+			margin-top: 8px;
+			background: linear-gradient(135deg, @accent-yellow 0%, @hover-yellow 100%);
+			color: #4B3800;
 			border: none;
-			box-shadow: 0 6px 20px rgba(255, 140, 0, 0.3);
+			box-shadow: 0 4px 16px fade(@accent-yellow, 35%);
 			transition: all 0.3s ease;
+			font-family: 'Nunito', 'Segoe UI', sans-serif;
 
 			&:hover,
 			&:focus {
-				background: linear-gradient(135deg, #ff9d00 0%, #e67e00 100%);
+				background: linear-gradient(135deg, @hover-yellow 0%, darken(@hover-yellow, 5%) 100%);
 				transform: translateY(-2px);
-				box-shadow: 0 8px 25px rgba(255, 140, 0, 0.45);
+				box-shadow: 0 6px 24px fade(@hover-yellow, 40%);
+				color: #3A2E00;
 			}
 
 			&:active {
 				transform: translateY(1px);
-				box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3);
+				box-shadow: 0 2px 8px fade(@accent-yellow, 30%);
 			}
 		}
 	}
 }
 
-.loginFooter {
-	position: relative;
-	z-index: 1;
-	padding-bottom: 24px;
+/* ===== Card Footer ===== */
+.cardFooter {
+	text-align: center;
+	margin-top: 32px;
+	padding-top: 20px;
+	border-top: 1px solid fade(@accent-yellow, 20%);
+
+	span {
+		color: #aaa;
+		font-size: 12px;
+		font-weight: 500;
+	}
 }
