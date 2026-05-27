@@ -1,0 +1,352 @@
+@import '~antd/es/style/themes/default.less';
+
+// ============================================
+// 🐾 PetCare Admin Suite — Sidebar & Layout
+// ============================================
+
+// ─── Design Tokens ────────────────────────────
+@pc-bg: #FFF8F2; // Creamy Honey background
+@pc-sidebar-bg: #FFF8F2; // Sidebar
+@pc-sidebar-border: #E3D9CB; // Surface Dim
+@pc-text: #4A3F35; // Headings dark brown
+@pc-text-secondary: #7D6E5D; // Body text warm gray
+@pc-text-muted: #9E9385; // Muted text
+@pc-olive: #D4A017; // Primary Honey
+@pc-olive-light: #FCE38A; // Light Honey
+@pc-olive-bg: #FFF3CD; // Active background
+@pc-olive-active: #FCE38A;
+@pc-gold: #D4A017; // Mustard Gold
+@pc-gold-bg: #FFF3CD;
+@pc-card: #FFFFFF; // Pure white cards
+@pc-radius: 16px;
+@pc-radius-lg: 20px;
+@pc-radius-xl: 24px;
+@pc-transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
+.ant-layout {
+	min-height: 100vh;
+	background: @pc-bg !important;
+	font-family: 'Quicksand', sans-serif;
+}
+
+.ant-layout-content {
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+// ─── Hide top header (side layout) ─────────────
+.ant-pro-global-header,
+.ant-pro-header-light,
+.ant-layout-header {
+	display: none !important;
+	height: 0 !important;
+}
+
+// ─── Sidebar Container ────────────────────────
+.ant-pro-sider.ant-layout-sider:not(.ant-layout-sider-collapsed) {
+	// Enforce 250px width
+	flex: 0 0 250px !important;
+	max-width: 250px !important;
+	min-width: 250px !important;
+	width: 250px !important;
+}
+
+.ant-pro-sider.ant-layout-sider {
+	background: @pc-sidebar-bg !important;
+	border-right: 1px solid @pc-sidebar-border;
+	box-shadow: 2px 0 12px rgba(0, 0, 0, 0.02);
+	backdrop-filter: blur(8px);
+
+	.ant-layout-sider-children {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
+}
+
+// ─── Logo Area ────────────────────────────────
+.ant-pro-sider-logo {
+	background: transparent !important;
+	padding: 0 !important;
+	height: auto !important;
+	border-bottom: none;
+
+	> a {
+		padding: 0 !important;
+		display: block !important;
+	}
+}
+
+.pc-sidebar-brand {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 32px 16px 24px;
+	width: 100%;
+	text-decoration: none;
+	gap: 12px;
+	
+	&:hover {
+		.brand-icon-wrapper {
+			transform: scale(1.06) translateY(-2px);
+			box-shadow: 0 12px 28px rgba(133, 109, 51, 0.15);
+		}
+	}
+
+	&.collapsed {
+		padding: 24px 0;
+		.brand-icon-wrapper {
+			width: 44px;
+			height: 44px;
+			border-radius: 50%;
+		}
+		.brand-text-wrapper {
+			display: none;
+		}
+	}
+
+	.brand-icon-wrapper {
+		width: 72px;
+		height: 72px;
+		border-radius: 50%;
+		background: #FEF9E7;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: #5C4A1E;
+		box-shadow: 0 4px 12px rgba(92, 74, 30, 0.15);
+		transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.brand-text-wrapper {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 2px;
+
+		h1 {
+			font-family: 'Quicksand', sans-serif;
+			font-size: 22px !important;
+			font-weight: 700 !important;
+			color: #4A3F35 !important;
+			margin: 0 !important;
+			letter-spacing: -0.5px;
+			line-height: 1;
+		}
+
+		span {
+			font-family: 'Quicksand', sans-serif;
+			font-size: 13px;
+			font-weight: 600;
+			color: #7D6E5D;
+			letter-spacing: 0.2px;
+		}
+	}
+}
+
+// ─── Menu Section ─────────────────────────────
+.ant-menu-light.ant-pro-sider-menu {
+	padding: 8px 12px;
+	background: transparent;
+	border-right: none;
+	flex: 1;
+
+	// Section Labels
+	&::before {
+		content: '';
+		display: block;
+		height: 24px;
+	}
+
+	.ant-menu-item,
+	.ant-menu-submenu-title {
+		height: 48px !important;
+		line-height: 48px !important;
+		margin-bottom: 8px !important;
+		margin-top: 0 !important;
+		padding: 0 16px !important;
+		border-radius: 999px !important;
+		color: #7D6E5D;
+		font-weight: 600;
+		font-size: 15px;
+		transition: @pc-transition;
+		position: relative;
+		overflow: hidden;
+
+		&::after {
+			display: none;
+		}
+
+		&:hover {
+			color: @pc-text-secondary;
+			background: rgba(0, 0, 0, 0.04);
+		}
+
+		.pc-menu-item {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			color: inherit;
+			width: 100%;
+			height: 100%;
+
+			.pc-menu-title {
+				flex: 1;
+			}
+		}
+	}
+
+	// ─── Active / Selected Item ──────────────
+	li.ant-menu-item-selected {
+		background: @pc-olive-light !important;
+		color: #4A3F35 !important;
+		font-weight: 700;
+		box-shadow: 0 4px 12px rgba(212, 160, 23, 0.2);
+
+		&:hover {
+			background: darken(@pc-olive-light, 5%) !important;
+			color: #4A3F35 !important;
+		}
+
+		.pc-menu-item {
+			color: #4A3F35 !important;
+		}
+	}
+
+	// ─── Collapsed ──────────────────────────
+	&.ant-menu-inline-collapsed {
+		padding: 8px 6px;
+		&::before { display: none; }
+
+		.ant-menu-item,
+		.ant-menu-submenu-title {
+			padding: 0 calc(50% - 9px) !important;
+			border-radius: @pc-radius;
+			.anticon { margin-right: 0; }
+			.pc-menu-title { display: none; }
+		}
+	}
+}
+
+// ─── Sidebar Footer ───────────────────────────
+.ant-pro-sider-extra {
+	padding: 12px;
+	border-top: 1px solid @pc-sidebar-border;
+}
+
+.sidebar-user-card {
+	background: linear-gradient(135deg, #F5F0E8, #FAF7F2);
+	border-radius: @pc-radius;
+	padding: 12px 16px;
+	margin-bottom: 12px;
+	cursor: pointer;
+	transition: @pc-transition;
+	border: 1px solid rgba(0, 0, 0, 0.05);
+	text-align: center;
+	
+	&:hover {
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+		transform: translateY(-1px);
+	}
+
+	.sidebar-user-avatar { display: none; }
+	.sidebar-user-info { display: none; }
+	.sidebar-user-name { display: none; }
+	.sidebar-user-role { display: none; }
+}
+
+// Override sidebar footer to show custom content
+.sidebar-footer-menu {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	margin-top: 8px;
+}
+
+.add-appointment-btn {
+	background: #D4A017;
+	color: #FFFFFF;
+	font-weight: 700;
+	font-size: 14px;
+	padding: 12px 16px;
+	border-radius: 999px;
+	border: none;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	box-shadow: 0 4px 12px rgba(212, 160, 23, 0.3);
+	transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+	margin-top: auto;
+	margin-bottom: 16px;
+
+	&:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 6px 16px rgba(212, 160, 23, 0.4);
+		background: darken(#D4A017, 5%);
+	}
+}
+
+.sidebar-footer-item {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 10px 14px;
+	border-radius: 12px;
+	color: @pc-text-secondary;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: @pc-transition;
+	border: none;
+	background: none;
+	width: 100%;
+	text-align: left;
+
+	&:hover {
+		background: @pc-olive-bg;
+		color: @pc-text;
+	}
+
+	.anticon {
+		font-size: 16px;
+		color: @pc-text-muted;
+	}
+
+	&.logout {
+		color: #B45309;
+		.anticon { color: #B45309; }
+		&:hover { background: #FEF3C7; }
+	}
+}
+
+// ─── Fix Sider ────────────────────────────────
+.ant-pro-sider.ant-layout-sider.ant-pro-sider-fixed {
+	left: unset;
+}
+
+// ─── Main Content Spacing ─────────────────────
+.ant-layout-content {
+	padding: 16px 48px 32px 64px !important; // Reduced top padding
+	flex: 1 !important;
+	min-width: 0 !important; // Prevent flex blowout
+}
+
+// ─── Global Card Override ─────────────────────
+.ant-card {
+	background: @pc-card;
+	border-radius: @pc-radius-lg;
+	border: 1px solid rgba(0, 0, 0, 0.04);
+	box-shadow: 0 2px 16px rgba(0, 0, 0, 0.03);
+}
+
+// ─── IE11 compat ──────────────────────────────
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+	body .ant-design-pro > .ant-layout {
+		min-height: 100vh;
+	}
+}

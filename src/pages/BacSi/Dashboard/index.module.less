@@ -1,0 +1,305 @@
+// ============================================
+// Dashboard Bác sĩ — matched PetCare Admin tokens
+// ============================================
+
+@pc-bg: #FFF8F2;
+@pc-card: #FFFFFF;
+@pc-text: #4A3F35;
+@pc-text-secondary: #7D6E5D;
+@pc-text-muted: #9E9385;
+@pc-border: #E3D9CB;
+@pc-primary: #8B7355;
+@radius-lg: 16px;
+@radius-xl: 20px;
+@shadow-card: 0 4px 20px rgba(0, 0, 0, 0.04);
+@shadow-hover: 0 10px 36px rgba(0, 0, 0, 0.08);
+@transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
+.page {
+  padding: 28px 24px 32px;
+  background: @pc-bg;
+  min-height: 100vh;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.greeting {
+  margin: 0 0 4px !important;
+  color: @pc-text !important;
+  font-size: 24px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.3px;
+}
+
+.dateText {
+  color: @pc-text-secondary;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.statusBadge {
+  background: #E6F9F0;
+  border: 1px solid #B7EB8F;
+  border-radius: 9999px;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: #389E0D;
+  font-weight: 700;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  :global(.ant-badge-status-dot) {
+    background: #52C41A !important;
+  }
+}
+
+// Stats
+.statsRow {
+  margin-bottom: 24px !important;
+}
+
+.statCard {
+  border-radius: @radius-xl !important;
+  border: 1px solid @pc-border !important;
+  background: @pc-card !important;
+  text-align: center;
+  transition: @transition;
+
+  &:hover {
+    box-shadow: @shadow-hover !important;
+    transform: translateY(-2px);
+  }
+
+  :global(.ant-card-body) {
+    padding: 20px 16px !important;
+    height: auto !important;
+  }
+}
+
+.statBlue {
+  background: linear-gradient(135deg, #EBF4FF 0%, #D6EAFF 100%) !important;
+  border-color: #BAD7FF !important;
+  .statIcon { color: #1890FF; }
+  .statNumber { color: #096DD9; }
+}
+.statOrange {
+  background: linear-gradient(135deg, #FFF7E6 0%, #FFE8BB 100%) !important;
+  border-color: #FFD591 !important;
+  .statIcon { color: #FA8C16; }
+  .statNumber { color: #D46B08; }
+}
+.statGreen {
+  background: linear-gradient(135deg, #F0FFF4 0%, #D9F5E5 100%) !important;
+  border-color: #B7EB8F !important;
+  .statIcon { color: #52C41A; }
+  .statNumber { color: #389E0D; }
+}
+.statTeal {
+  background: linear-gradient(135deg, #E6FFFB 0%, #CCFAF2 100%) !important;
+  border-color: #87E8DE !important;
+  .statIcon { color: #13C2C2; }
+  .statNumber { color: #08979C; }
+}
+
+.statLabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: @pc-text-muted;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.statIcon {
+  font-size: 24px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.statNumber {
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.statDesc {
+  font-size: 12px;
+  color: @pc-text-secondary;
+  font-weight: 500;
+}
+
+// Section cards
+.sectionCard {
+  border-radius: @radius-lg !important;
+  border: 1px solid @pc-border !important;
+  background: @pc-card !important;
+  box-shadow: @shadow-card !important;
+  height: 100%;
+
+  :global(.ant-card-head) {
+    border-bottom: 1px solid @pc-border !important;
+    padding: 0 20px !important;
+    min-height: 52px !important;
+  }
+
+  :global(.ant-card-body) {
+    padding: 16px !important;
+    height: auto !important;
+  }
+}
+
+.cardTitle {
+  font-size: 16px;
+  font-weight: 800;
+  color: @pc-text;
+  letter-spacing: -0.2px;
+}
+
+.viewAll {
+  font-size: 13px;
+  color: @pc-primary;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+
+  &:hover { color: @pc-text; }
+  &::after { display: none !important; }
+}
+
+// Appointment items
+.appointmentItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  background: @pc-bg;
+  margin-bottom: 10px;
+  border: 1px solid transparent;
+  transition: @transition;
+
+  &:last-child { margin-bottom: 0; }
+  &:hover {
+    background: @pc-card;
+    border-color: @pc-border;
+    box-shadow: @shadow-card;
+    transform: translateX(3px);
+  }
+}
+
+.appointmentAvatar {
+  flex-shrink: 0;
+  border: 2px solid @pc-border !important;
+}
+
+.appointmentInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.aptOwner {
+  font-weight: 700;
+  color: @pc-text;
+  font-size: 14px;
+}
+
+.aptPet {
+  font-size: 12px;
+  color: @pc-text-secondary;
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+.appointmentRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.aptTag {
+  font-size: 11px !important;
+  border-radius: 9999px !important;
+  font-weight: 700 !important;
+  padding: 2px 10px !important;
+}
+
+.aptTime {
+  font-size: 11px;
+  color: @pc-text-muted;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+// Notification items
+.notifItem {
+  display: flex;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  border: 1px solid transparent;
+  background: @pc-bg;
+  transition: @transition;
+
+  &:last-child { margin-bottom: 0; }
+
+  &:hover {
+    background: @pc-card;
+    border-color: @pc-border;
+    box-shadow: @shadow-card;
+  }
+}
+
+.notif_success {
+  border-left: 3px solid #52C41A;
+  .notifIcon { color: #52C41A; }
+}
+
+.notif_info {
+  border-left: 3px solid #1890FF;
+  .notifIcon { color: #1890FF; }
+}
+
+.notifIcon {
+  font-size: 18px;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+.notifContent {
+  flex: 1;
+}
+
+.notifTitle {
+  font-weight: 700;
+  color: @pc-text;
+  font-size: 13px;
+  margin-bottom: 3px;
+}
+
+.notifDesc {
+  font-size: 12px;
+  color: @pc-text-secondary;
+  line-height: 1.5;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.notifTime {
+  font-size: 11px;
+  color: @pc-text-muted;
+  font-weight: 600;
+}

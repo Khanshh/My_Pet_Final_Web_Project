@@ -1,0 +1,407 @@
+@import '~antd/es/style/themes/default.less';
+// ═══════════════════════════════════════
+//  DESIGN TOKENS — PetCare Pet Management
+// ═══════════════════════════════════════
+@amber:          #5C4425; // Very deep rich gold
+@amber-hover:    #3E2E15;
+@amber-light:    #E8DFD0;
+@amber-glow:     rgba(92, 68, 37, 0.2);
+
+@bg-cream:       #F5F2EC;
+@card-bg:        #FEFDFB;
+@text-primary:   #000000; // Rich absolute black
+@text-muted:     #1A1715; // Nearly black
+@text-sub:       #0D0B0A; // Near-absolute black charcoal
+
+@green-bg:       #E0EDE8;
+@green-text:     #0F2E1E; // Very deep prominent green
+@pink-bg:        #F0E2E5;
+@pink-text:      #4D2530; // Very deep crimson/pink
+@red-bg:         #EADADA;
+@red-text:       #5A1F2B; // Very deep prominent red
+@yellow-bg:      #F5ECD8;
+@yellow-text:    #4A3518; // Very deep prominent gold
+
+@radius-card:    16px;
+@radius-pill:    999px;
+@shadow-card:    0 2px 16px rgba(0, 0, 0, 0.03);
+@shadow-hover:   0 12px 32px rgba(0, 0, 0, 0.07);
+@transition:     all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+// ═══════════════════════════════════════
+//  ANIMATIONS
+// ═══════════════════════════════════════
+@keyframes cardEnter {
+	from {
+		opacity: 0;
+		transform: translateY(20px) scale(0.97);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+@keyframes fabPulse {
+	0%, 100% { box-shadow: 0 6px 24px @amber-glow; }
+	50%      { box-shadow: 0 6px 32px rgba(212, 160, 23, 0.35); }
+}
+
+// ═══════════════════════════════════════
+//  PAGE CONTENT WRAPPER
+// ═══════════════════════════════════════
+.pet-page-content {
+	padding: 0;
+}
+
+// ═══════════════════════════════════════
+//  PAGE TITLE ROW
+// ═══════════════════════════════════════
+.pet-title-row {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	margin-bottom: 32px;
+	flex-wrap: wrap;
+	gap: 20px;
+}
+
+.pet-title-left {
+	display: flex;
+	align-items: flex-start;
+	gap: 16px;
+}
+
+.pet-title-icon {
+	width: 48px;
+	height: 48px;
+	border-radius: 14px;
+	background: linear-gradient(135deg, @amber-light, fade(@amber, 22%));
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: @amber;
+	flex-shrink: 0;
+	box-shadow: 0 4px 14px @amber-glow;
+
+	svg {
+		display: block;
+	}
+}
+
+.pet-title-left h1 {
+	font-size: 26px;
+	font-weight: 800;
+	color: @text-primary;
+	margin: 0;
+	letter-spacing: -0.4px;
+	line-height: 1.2;
+}
+
+.pet-subtitle {
+	font-size: 14px;
+	color: @text-muted;
+	margin: 4px 0 0 0;
+	font-weight: 400;
+}
+
+// ═══════════════════════════════════════
+//  FILTER PILLS
+// ═══════════════════════════════════════
+.pet-filter-pills {
+	display: flex;
+	gap: 6px;
+	background: @card-bg;
+	padding: 5px;
+	border-radius: @radius-pill;
+	border: 1px solid #E8E5DE;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.filter-pill {
+	padding: 8px 22px;
+	border-radius: @radius-pill;
+	border: none;
+	font-size: 13px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: @transition;
+	color: @text-muted;
+	background: transparent;
+	white-space: nowrap;
+
+	&:hover:not(.active) {
+		background: #F5F2EB;
+		color: @text-primary;
+	}
+
+	&.active {
+		background: @amber;
+		color: #FFFFFF;
+		box-shadow: 0 2px 8px @amber-glow;
+	}
+}
+
+// ═══════════════════════════════════════
+//  PET CARD GRID
+// ═══════════════════════════════════════
+.pet-card-grid {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 24px;
+	padding-bottom: 80px;
+
+	@media (max-width: 1200px) {
+		grid-template-columns: repeat(3, 1fr);
+	}
+	@media (max-width: 900px) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	@media (max-width: 580px) {
+		grid-template-columns: 1fr;
+	}
+}
+
+// ═══════════════════════════════════════
+//  PET CARD
+// ═══════════════════════════════════════
+.pet-card {
+	background: @card-bg;
+	border-radius: @radius-card;
+	box-shadow: @shadow-card;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	border: 1px solid rgba(0, 0, 0, 0.04);
+	transition: @transition;
+	animation: cardEnter 0.45s ease both;
+
+	&:hover {
+		transform: translateY(-4px);
+		box-shadow: @shadow-hover;
+		border-color: transparent;
+
+		.pet-card-photo img {
+			transform: scale(1.06);
+		}
+	}
+}
+
+// ── Photo Section ──
+.pet-card-photo {
+	position: relative;
+	aspect-ratio: 1 / 1;
+	overflow: hidden;
+	background: #F0EDE6;
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+		transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+}
+
+// ── Health Badge ──
+.health-badge {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	padding: 4px 12px;
+	border-radius: @radius-pill;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.2px;
+	backdrop-filter: blur(6px);
+	z-index: 2;
+
+	&.badge-healthy {
+		background: fade(@green-bg, 92%);
+		color: @green-text;
+	}
+	&.badge-checkup {
+		background: fade(@pink-bg, 92%);
+		color: @pink-text;
+	}
+	&.badge-urgent {
+		background: fade(@red-bg, 92%);
+		color: @red-text;
+	}
+	&.badge-new {
+		background: fade(@yellow-bg, 92%);
+		color: @yellow-text;
+	}
+}
+
+// ── Card Body ──
+.pet-card-body {
+	padding: 16px 18px 18px;
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+
+.pet-name-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 2px;
+}
+
+.pet-name {
+	font-size: 18px;
+	font-weight: 800;
+	color: @text-primary;
+	letter-spacing: -0.3px;
+}
+
+.gender-icon {
+	font-size: 18px;
+	font-weight: 700;
+
+	&.male {
+		color: #3B82F6;
+	}
+	&.female {
+		color: #EC4899;
+	}
+}
+
+.pet-breed {
+	font-size: 13px;
+	color: @text-muted;
+	font-weight: 500;
+	margin-bottom: auto;
+}
+
+// ── Owner Section ──
+.pet-owner-row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-top: 14px;
+	padding-top: 14px;
+	border-top: 1px solid #F0EDE6;
+}
+
+.owner-avatar {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 2px solid #F0EDE6;
+	flex-shrink: 0;
+}
+
+.owner-text {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+.owner-label {
+	font-size: 10px;
+	color: @text-muted;
+	text-transform: uppercase;
+	letter-spacing: 0.8px;
+	font-weight: 700;
+	line-height: 1;
+	margin-bottom: 3px;
+}
+
+.owner-name {
+	font-size: 13px;
+	font-weight: 700;
+	color: @text-sub;
+	line-height: 1;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+// ═══════════════════════════════════════
+//  ADD NEW PET CARD
+// ═══════════════════════════════════════
+.pet-card-add {
+	border: 2px dashed @amber;
+	border-radius: @radius-card;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 32px 24px;
+	text-align: center;
+	cursor: pointer;
+	transition: @transition;
+	animation: cardEnter 0.45s ease both;
+	min-height: 320px;
+
+	&:hover {
+		background: fade(@amber, 6%);
+		border-color: @amber-hover;
+
+		.add-circle {
+			background: @amber;
+			color: #FFFFFF;
+			transform: scale(1.1);
+			box-shadow: 0 6px 20px @amber-glow;
+		}
+	}
+}
+
+.add-circle {
+	width: 56px;
+	height: 56px;
+	border-radius: 50%;
+	background: @amber-light;
+	color: @amber;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 16px;
+	transition: @transition;
+}
+
+.add-title {
+	font-size: 16px;
+	font-weight: 800;
+	color: @text-primary;
+	margin-bottom: 6px;
+}
+
+.add-desc {
+	font-size: 13px;
+	color: @text-muted;
+	max-width: 200px;
+	line-height: 1.5;
+}
+
+// ═══════════════════════════════════════
+//  FLOATING ACTION BUTTON
+// ═══════════════════════════════════════
+.pet-fab {
+	position: fixed;
+	bottom: 32px;
+	right: 32px;
+	z-index: 100;
+	width: 56px;
+	height: 56px;
+	border-radius: 50%;
+	border: none;
+	background: @amber;
+	color: #FFFFFF;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	box-shadow: 0 6px 24px @amber-glow;
+	transition: @transition;
+	animation: fabPulse 2.5s ease-in-out infinite;
+
+	&:hover {
+		background: @amber-hover;
+		transform: scale(1.12);
+		box-shadow: 0 10px 32px rgba(212, 160, 23, 0.4);
+	}
+}

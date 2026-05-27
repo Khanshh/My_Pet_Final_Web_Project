@@ -1,0 +1,530 @@
+@import '~antd/es/style/themes/default.less';
+
+// ========== Design Tokens - Organic Theme ==========
+@primary-olive: #D4A017; // Honey Mustard
+@primary-olive-hover: #B8860B;
+@bg-cream: #FFF8F2; // Premium warm neutral background
+@bg-teal-light: #95E1D3; // Mint
+@bg-red-light: #F38181; // Pink
+@text-dark: #4A3F35; // Rich absolute black for maximum prominence
+@text-gray: #7D6E5D; // Nearly black for secondary texts
+@text-light: #9E9385; // Higher contrast dark grey for helper text/icons
+@radius-3xl: 24px;
+@radius-full: 9999px;
+@shadow-soft: 0 2px 16px rgba(0, 0, 0, 0.03);
+@shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.06);
+@transition-fast: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
+// ========== Page Header ==========
+.doc-page-content {
+	padding: 0;
+}
+
+.pet-title-row {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	margin-bottom: 32px;
+	flex-wrap: wrap;
+	gap: 20px;
+
+	.pet-title-left {
+		display: flex;
+		align-items: flex-start;
+		gap: 16px;
+
+		.pet-title-icon {
+			width: 48px;
+			height: 48px;
+			border-radius: 14px;
+			background: linear-gradient(135deg, #EDE5D9, rgba(107, 78, 40, 0.28));
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: #6B4E28;
+			flex-shrink: 0;
+			box-shadow: 0 4px 14px rgba(107, 78, 40, 0.2);
+		}
+
+		h1 {
+			font-size: 26px;
+			font-weight: 800;
+			color: @text-dark;
+			margin: 0;
+			letter-spacing: -0.4px;
+			line-height: 1.2;
+		}
+
+		.pet-subtitle {
+			font-size: 14px;
+			color: @text-gray;
+			margin: 4px 0 0 0;
+			font-weight: 400;
+		}
+	}
+
+	.um-add-btn {
+		background: @primary-olive;
+		color: #FFFFFF;
+		border: none;
+		border-radius: 8px;
+		padding: 10px 20px;
+		font-weight: 600;
+		font-size: 14px;
+		cursor: pointer;
+		transition: background 0.2s;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+
+		&:hover {
+			background: @primary-olive-hover;
+		}
+	}
+}
+
+// Toolbar
+.toolbar-row {
+	display: flex;
+	justify-content: flex-end;
+	gap: 16px;
+	margin-top: -16px;
+	margin-bottom: 24px;
+
+	.toolbar-btn {
+		border: none;
+		border-radius: 12px;
+		padding: 10px 20px;
+		font-weight: 700;
+		font-size: 14px;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		cursor: pointer;
+		transition: @transition-fast;
+
+		&.filter {
+			background-color: #E0EDE8; // Xanh mint nhạt đậm hơn
+			color: #0F2E1E; // Very deep prominent green
+
+			&:hover {
+				background-color: #D0E0D8;
+			}
+		}
+
+		&.schedule {
+			background-color: #F5ECD8; // Vàng nhạt đậm hơn
+			color: #4A3518; // Very rich prominent gold
+
+			&:hover {
+				background-color: #F5EBD9;
+			}
+		}
+	}
+}
+
+
+// ========== Metrics Row ==========
+.metrics-row {
+	display: flex;
+	gap: 24px;
+	margin-bottom: 32px;
+
+	.metric-card {
+		border-radius: @radius-3xl;
+		padding: 24px 32px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		transition: @transition-fast;
+		border: none;
+		box-shadow: @shadow-soft;
+		cursor: pointer;
+
+		&:hover {
+			transform: translateY(-4px);
+			box-shadow: @shadow-hover;
+		}
+
+		&.applications {
+			flex: 2;
+			background-color: @bg-cream;
+
+			.content-left {
+				display: flex;
+				flex-direction: column;
+				gap: 12px;
+				align-items: flex-start;
+
+				h2 {
+					font-size: 20px;
+					font-weight: 800;
+					color: @text-dark;
+					margin: 0;
+				}
+
+				p {
+					color: @text-gray;
+					margin: 0;
+					font-size: 15px;
+				}
+
+				.btn-olive {
+					background-color: @primary-olive;
+					color: #FFF;
+					border: none;
+					border-radius: 12px;
+					padding: 8px 24px;
+					font-weight: 600;
+					cursor: pointer;
+					transition: @transition-fast;
+
+					&:hover {
+						background-color: @primary-olive-hover;
+					}
+				}
+			}
+
+			.icon-right {
+				font-size: 48px;
+				color: #6B4E28;
+				opacity: 0.9;
+			}
+		}
+
+		&.active-doctors {
+			flex: 1;
+			background-color: @bg-teal-light;
+			flex-direction: column;
+			justify-content: center;
+			text-align: center;
+			gap: 8px;
+
+			.icon-top {
+				color: #0F2E1E;
+				font-size: 24px;
+				background: #E0EDE8;
+				padding: 8px;
+				border-radius: 50%;
+			}
+
+			h1 {
+				font-size: 42px;
+				font-weight: 900;
+				color: #0F2E1E;
+				margin: 0;
+				line-height: 1;
+			}
+
+			p {
+				color: #0F2E1E;
+				font-weight: 700;
+				margin: 0;
+				font-size: 14px;
+			}
+		}
+
+		&.on-duty {
+			flex: 1;
+			background-color: @bg-red-light;
+			flex-direction: column;
+			justify-content: center;
+			text-align: center;
+			gap: 8px;
+
+			.icon-top {
+				color: #4D2530;
+				font-size: 24px;
+				background: #F0E2E5;
+				padding: 8px;
+				border-radius: 50%;
+			}
+
+			h1 {
+				font-size: 42px;
+				font-weight: 900;
+				color: #4D2530;
+				margin: 0;
+				line-height: 1;
+			}
+
+			p {
+				color: #4D2530;
+				font-weight: 700;
+				margin: 0;
+				font-size: 14px;
+			}
+		}
+	}
+}
+
+// ========== Doctor Cards Grid ==========
+.doctor-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+	gap: 24px;
+	margin-bottom: 40px;
+
+	.doctor-card {
+		background: #FEFDFB;
+		border-radius: @radius-3xl;
+		padding: 24px;
+		box-shadow: @shadow-soft;
+		transition: @transition-fast;
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		position: relative;
+		border: 1px solid transparent;
+
+		&:hover {
+			transform: translateY(-4px);
+			box-shadow: @shadow-hover;
+		}
+
+		&.pending {
+			border: 2px dashed rgba(163, 134, 90, 0.4); // Dashed gold/brown
+			box-shadow: none;
+			background: #FBF6EE;
+
+			.avatar-img {
+				filter: grayscale(100%);
+			}
+		}
+
+		&.invite-card {
+			border: 2px dashed #D1D5DB;
+			box-shadow: none;
+			background: transparent;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			cursor: pointer;
+			gap: 20px;
+
+			&:hover {
+				border-color: @primary-olive;
+				background: @bg-cream;
+
+				.invite-icon {
+					color: @primary-olive;
+					background: #F5F0E8;
+				}
+			}
+
+			.invite-icon {
+				width: 64px;
+				height: 64px;
+				border-radius: 50%;
+				background: rgba(0, 0, 0, 0.04);
+				color: @text-light;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 24px;
+				transition: @transition-fast;
+			}
+
+			h3 {
+				color: @text-dark;
+				font-weight: 800;
+				font-size: 18px;
+				margin: 0;
+			}
+		}
+
+		.card-header {
+			display: flex;
+			align-items: center;
+			gap: 16px;
+			position: relative;
+
+			.avatar-wrapper {
+				position: relative;
+
+				.avatar-img {
+					width: 72px;
+					height: 72px;
+					border-radius: 50%;
+					object-fit: cover;
+					border: 2px solid rgba(0, 0, 0, 0.06);
+				}
+
+				.status-dot {
+					position: absolute;
+					bottom: 4px;
+					right: 4px;
+					width: 14px;
+					height: 14px;
+					background-color: #1A5A38;
+					border: 2px solid #FFF;
+					border-radius: 50%;
+				}
+			}
+
+			.info {
+				flex: 1;
+
+				h3 {
+					font-size: 18px;
+					font-weight: 800;
+					color: @text-dark;
+					margin: 0 0 4px 0;
+				}
+
+				.specialty {
+					font-size: 14px;
+					color: #5A1F2B; // Very dark Crimson specialty
+					font-weight: 700;
+					margin: 0;
+				}
+			}
+		}
+
+		.card-body {
+			display: flex;
+			flex-direction: column;
+			gap: 12px;
+
+			.info-row {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				color: @text-gray;
+				font-size: 14px;
+				font-weight: 500;
+
+				.icon {
+					color: @text-light;
+					font-size: 16px;
+				}
+			}
+
+			.badges {
+				display: flex;
+				gap: 8px;
+				flex-wrap: wrap;
+				margin-top: 4px;
+
+				.badge {
+					background-color: rgba(0, 0, 0, 0.04);
+					color: @text-gray;
+					padding: 4px 12px;
+					border-radius: @radius-full;
+					font-size: 12px;
+					font-weight: 600;
+				}
+			}
+		}
+
+		.card-footer {
+			margin-top: auto;
+			padding-top: 16px;
+			border-top: 1px solid rgba(0, 0, 0, 0.06);
+			display: flex;
+			gap: 12px;
+
+			.btn-schedule {
+				flex: 1;
+				background-color: #F5ECD8;
+				color: #4A3518;
+				border: none;
+				border-radius: 12px;
+				padding: 10px;
+				font-weight: 700;
+				cursor: pointer;
+				transition: @transition-fast;
+
+				&:hover {
+					background-color: #EBE0C8;
+				}
+			}
+
+			.btn-approve {
+				flex: 1;
+				background-color: @primary-olive;
+				color: #FFFFFF;
+				border: none;
+				border-radius: 12px;
+				padding: 14px;
+				font-size: 15px;
+				font-weight: 800;
+				cursor: pointer;
+				transition: @transition-fast;
+
+				&:hover {
+					background-color: @primary-olive-hover;
+				}
+			}
+
+			.btn-icon {
+				width: 44px;
+				height: 44px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background-color: rgba(0, 0, 0, 0.04);
+				color: @text-gray;
+				border: none;
+				border-radius: 12px;
+				cursor: pointer;
+				transition: @transition-fast;
+
+				&.danger {
+					background-color: #F0E2E5;
+					color: #4D2530;
+
+					&:hover {
+						background-color: #EADADE;
+					}
+				}
+
+				&:hover {
+					background-color: rgba(0, 0, 0, 0.08);
+				}
+			}
+
+			.pending-link {
+				text-align: center;
+				display: block;
+				width: 100%;
+				color: @text-gray;
+				font-size: 13px;
+				text-decoration: underline;
+				margin-top: 8px;
+				cursor: pointer;
+
+				&:hover {
+					color: @primary-olive;
+				}
+			}
+		}
+	}
+}
+
+// ========== Floating Action Button ==========
+.fab-btn {
+	position: fixed;
+	bottom: 40px;
+	right: 40px;
+	width: 64px;
+	height: 64px;
+	border-radius: 50%;
+	background-color: @primary-olive;
+	color: #FFFFFF;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 28px;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+	cursor: pointer;
+	border: none;
+	transition: @transition-fast;
+	z-index: 100;
+
+	&:hover {
+		transform: scale(1.05) translateY(-4px);
+		background-color: @primary-olive-hover;
+		box-shadow: 0 14px 30px rgba(0, 0, 0, 0.2);
+	}
+}
