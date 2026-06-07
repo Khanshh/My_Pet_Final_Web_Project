@@ -101,6 +101,11 @@ export const getDashboardStats = async (): Promise<any> => {
 	return res.data;
 };
 
+export const exportReportAPI = async (params: { report_type: string, start_date?: string, end_date?: string, group_by: string }): Promise<any> => {
+	const res = await axios.get(`${ip3}api/v1/admin/reports/export`, { params });
+	return res.data;
+};
+
 // --- USER (OWNER) SERVICES ---
 
 export const getOwners = async (role?: string): Promise<User[]> => {

@@ -12,6 +12,7 @@ import Chart from 'react-apexcharts';
 import * as XLSX from 'xlsx';
 import { Modal } from 'antd';
 import HeaderProfile from '@/components/HeaderProfile';
+import ExportReportModal from './components/ExportReportModal';
 import './components/style.less';
 
 // ─── Metric Cards Data ────────────────────────
@@ -226,6 +227,7 @@ const TrangChu = () => {
 	const [recentActivities, setRecentActivities] = useState<any[]>([]);
 	const [isNotifModalOpen, setIsNotifModalOpen] = useState(false);
 	const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+	const [isExportModalOpen, setIsExportModalOpen] = useState(false);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
@@ -272,48 +274,7 @@ const TrangChu = () => {
 	};
 
 	const handleExportGeneralReport = async () => {
-		if (!stats) {
-			message.warning('Dữ liệu đang tải, vui lòng thử lại sau!');
-			return;
-		}
-
-		try {
-			const servicesData = await getServices();
-
-			const summaryData = [
-				{ 'Hạng mục': 'THỐNG KÊ TỔNG QUAN', 'Giá trị': '', 'Ghi chú': '' },
-				{ 'Hạng mục': 'Tổng thú cưng', 'Giá trị': stats.total_pets || 0, 'Ghi chú': 'Con' },
-				{ 'Hạng mục': 'Tổng khách hàng', 'Giá trị': stats.total_owners || 0, 'Ghi chú': 'Người' },
-				{ 'Hạng mục': 'Tổng bác sĩ', 'Giá trị': stats.total_vets || 0, 'Ghi chú': 'Người' },
-				{ 'Hạng mục': 'Tổng doanh thu (VNĐ)', 'Giá trị': stats.total_revenue || 0, 'Ghi chú': 'Đã thanh toán' },
-				{ 'Hạng mục': '', 'Giá trị': '', 'Ghi chú': '' },
-				{ 'Hạng mục': 'THỐNG KÊ LỊCH HẸN', 'Giá trị': '', 'Ghi chú': '' },
-				{ 'Hạng mục': 'Tổng số lịch hẹn', 'Giá trị': stats.total_appointments || 0, 'Ghi chú': 'Lượt' },
-				{ 'Hạng mục': 'Hoàn thành', 'Giá trị': stats.appointments_completed || 0, 'Ghi chú': '' },
-				{ 'Hạng mục': 'Đang chờ', 'Giá trị': stats.appointments_pending || 0, 'Ghi chú': '' },
-				{ 'Hạng mục': 'Đã hủy', 'Giá trị': stats.appointments_cancelled || 0, 'Ghi chú': '' },
-				{ 'Hạng mục': '', 'Giá trị': '', 'Ghi chú': '' },
-				{ 'Hạng mục': 'DANH MỤC DỊCH VỤ HIỆN CÓ', 'Giá trị': '', 'Ghi chú': '' },
-				...servicesData.map(s => ({
-					'Hạng mục': s.name,
-					'Giá trị': `${s.price.toLocaleString('vi-VN')} VND`,
-					'Ghi chú': s.is_active ? 'Đang kinh doanh' : 'Ngưng kinh doanh'
-				}))
-			];
-
-			const worksheet = XLSX.utils.json_to_sheet(summaryData);
-			const wscols = [{ wch: 35 }, { wch: 20 }, { wch: 20 }];
-			worksheet['!cols'] = wscols;
-
-			const workbook = XLSX.utils.book_new();
-			XLSX.utils.book_append_sheet(workbook, worksheet, 'Báo cáo chi tiết');
-
-			const fileName = `Bao_cao_chi_tiet_PetCare_${new Date().toLocaleDateString('vi-VN').replace(/\//g, '-')}.xlsx`;
-			XLSX.writeFile(workbook, fileName);
-			message.success(`Đã xuất báo cáo chi tiết thành công!`);
-		} catch (error) {
-			message.error('Lỗi khi xuất báo cáo!');
-		}
+		setIsExportModalOpen(true);
 	};
 
 	const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -607,6 +568,11 @@ const TrangChu = () => {
 					</div>
 				</div>
 			</Modal>
+
+			<ExportReportModal
+				visible={isExportModalOpen}
+				onCancel={() => setIsExportModalOpen(false)}
+			/>
 		</div>
 	);
 };
