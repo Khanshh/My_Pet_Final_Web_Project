@@ -401,7 +401,7 @@ export const getCurrentProfile = async (): Promise<User | null> => {
 	}
 };
 
-export const updateProfile = async (data: { full_name?: string; phone?: string; password?: string }): Promise<boolean> => {
+export const updateProfile = async (data: { full_name?: string; email?: string; phone?: string; password?: string; avatar_url?: string }): Promise<boolean> => {
 	try {
 		await axios.patch(`${ip3}api/v1/auth/me`, data);
 		message.success('Cập nhật hồ sơ thành công!');

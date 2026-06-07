@@ -373,7 +373,11 @@ const UserManagement: React.FC = () => {
 						label="Mật khẩu khởi tạo"
 						rules={[
 							{ required: true, message: 'Vui lòng nhập mật khẩu!' },
-							{ min: 8, message: 'Mật khẩu phải có ít nhất 8 ký tự!' }
+							{ min: 8, message: 'Mật khẩu phải có ít nhất 8 ký tự!' },
+							{ 
+								pattern: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[A-Z]).{8,}$/, 
+								message: 'Mật khẩu yêu cầu phải có cả chữ và số, trong đó phải có 1 chữ in hoa!' 
+							}
 						]}
 					>
 						<Input.Password prefix={<Lock size={16} color="#A3865A" />} placeholder="Nhập mật khẩu an toàn..." />

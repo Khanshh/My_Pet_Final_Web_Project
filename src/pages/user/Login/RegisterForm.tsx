@@ -62,7 +62,14 @@ const RegisterForm: React.FC = () => {
 
             <Form.Item
                 name="password"
-                rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}
+                rules={[
+                    { required: true, message: 'Vui lòng nhập mật khẩu!' },
+                    { min: 8, message: 'Mật khẩu phải có ít nhất 8 ký tự!' },
+                    { 
+                        pattern: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[A-Z]).{8,}$/, 
+                        message: 'Mật khẩu yêu cầu phải có cả chữ và số, trong đó phải có 1 chữ in hoa!' 
+                    }
+                ]}
             >
                 <Input.Password
                     prefix={<Lock size={18} style={{ opacity: 0.5, marginRight: 8 }} />}
@@ -76,6 +83,11 @@ const RegisterForm: React.FC = () => {
                 dependencies={['password']}
                 rules={[
                     { required: true, message: 'Vui lòng xác nhận mật khẩu!' },
+                    { min: 8, message: 'Mật khẩu phải có ít nhất 8 ký tự!' },
+                    { 
+                        pattern: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[A-Z]).{8,}$/, 
+                        message: 'Mật khẩu yêu cầu phải có cả chữ và số, trong đó phải có 1 chữ in hoa!' 
+                    },
                     ({ getFieldValue }) => ({
                         validator(_, value) {
                             if (!value || getFieldValue('password') === value) {

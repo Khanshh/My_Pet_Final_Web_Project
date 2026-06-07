@@ -62,12 +62,16 @@ async def cancel_my_appointment(
     db: AsyncSession = Depends(get_db)
 ):
     """Hủy lịch hẹn của tôi"""
-    app = await appointment_service.get_appointment(db, appointment_id)
+    from app.schemas.appointment import AppointmentUpdateStatusRequest
+    from app.models.appointment import AppointmentStatus
+    app = await appointment_service.get_appointment_by_id(db, appointment_id)
     if not app or str(app.owner_id) != str(current_user.id):
         from fastapi import HTTPException
         raise HTTPException(status_code=403, detail="Bạn không có quyền hủy lịch hẹn này")
     
-    await appointment_service.delete_appointment(db, appointment_id)
+    await appointment_service.update_appointment_status(
+        db, appointment_id, AppointmentUpdateStatusRequest(status=AppointmentStatus.cancelled)
+    )
     return {"detail": "Hủy lịch hẹn thành công"}
 
 @router.get("/medical-records", response_model=List[MedicalRecordResponse])

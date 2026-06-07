@@ -10,6 +10,7 @@ import {
   getConversationMessages,
   sendMessage,
 } from '@/services/messageService';
+import { ip3 } from '@/utils/ip';
 import styles from './index.module.less';
 
 const PhanHoi: React.FC = () => {
@@ -134,11 +135,21 @@ const PhanHoi: React.FC = () => {
             <div className={styles.messageSection}>
               <div className={styles.label}>TIN NHẮN CỦA KHÁCH</div>
               
-              {firstQuestion ? (
                 <div className={styles.bubble}>
                   <Quote size={20} className={styles.quoteIcon} />
                   <div>
-                    {firstQuestion.content || (firstQuestion.message_type === 'image' ? '📷 Hình ảnh' : '📎 Tệp đính kèm')}
+                    {firstQuestion.message_type === 'image' && firstQuestion.attachments?.[0]?.file_url ? (
+                      <div style={{ marginBottom: 8 }}>
+                        <img src={`${ip3}${firstQuestion.attachments[0].file_url.replace(/^\//, '')}`} alt="attachment" style={{ maxWidth: 200, borderRadius: 8 }} />
+                      </div>
+                    ) : firstQuestion.message_type === 'file' && firstQuestion.attachments?.[0]?.file_url ? (
+                      <div style={{ marginBottom: 8 }}>
+                        <a href={`${ip3}${firstQuestion.attachments[0].file_url.replace(/^\//, '')}`} target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(0,0,0,0.05)', padding: '8px 12px', borderRadius: 8, textDecoration: 'none', color: 'inherit' }}>
+                            <Paperclip size={16} /> {firstQuestion.attachments[0].file_name || 'Tải tệp đính kèm'}
+                        </a>
+                      </div>
+                    ) : null}
+                    {firstQuestion.content}
                   </div>
                   <div className={styles.time}>{formatTime(firstQuestion.created_at)}</div>
                 </div>
@@ -163,7 +174,18 @@ const PhanHoi: React.FC = () => {
                           {msg.sender?.full_name} · {formatTime(msg.created_at)}
                         </div>
                         <div>
-                          {msg.content || (msg.message_type === 'image' ? '📷 Hình ảnh' : '📎 Tệp đính kèm')}
+                          {msg.message_type === 'image' && msg.attachments?.[0]?.file_url ? (
+                            <div style={{ marginBottom: 8 }}>
+                              <img src={`${ip3}${msg.attachments[0].file_url.replace(/^\//, '')}`} alt="attachment" style={{ maxWidth: 200, borderRadius: 8 }} />
+                            </div>
+                          ) : msg.message_type === 'file' && msg.attachments?.[0]?.file_url ? (
+                            <div style={{ marginBottom: 8 }}>
+                              <a href={`${ip3}${msg.attachments[0].file_url.replace(/^\//, '')}`} target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(0,0,0,0.05)', padding: '8px 12px', borderRadius: 8, textDecoration: 'none', color: 'inherit' }}>
+                                  <Paperclip size={16} /> {msg.attachments[0].file_name || 'Tải tệp đính kèm'}
+                              </a>
+                            </div>
+                          ) : null}
+                          {msg.content}
                         </div>
                       </div>
                     );

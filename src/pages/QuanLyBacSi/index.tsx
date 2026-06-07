@@ -24,6 +24,7 @@ import { getDoctors, deleteDoctor, toggleDoctorStatus, createDoctor } from '@/se
 const QuanLyBacSi: React.FC = () => {
 	const [doctors, setDoctors] = useState<any[]>([]);
 	const [loading, setLoading] = useState(true);
+	const [searchText, setSearchText] = useState('');
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [form] = Form.useForm();
 	const [filterForm] = Form.useForm();
@@ -86,8 +87,15 @@ const QuanLyBacSi: React.FC = () => {
 		if (specializationFilter !== 'Tất cả' && doc.specialization !== specializationFilter) {
 			return false;
 		}
+		if (searchText && !doc.full_name?.toLowerCase().includes(searchText.toLowerCase()) && !doc.specialization?.toLowerCase().includes(searchText.toLowerCase())) {
+			return false;
+		}
 		return true;
 	});
+
+	const activeDoctorsCount = doctors.filter(d => d.is_active).length;
+	const onDutyCount = Math.floor(activeDoctorsCount / 2) || 0;
+
 	return (
 		<div className="petcare-dashboard">
 			{/* Header giống trang tổng quan */}
@@ -97,7 +105,12 @@ const QuanLyBacSi: React.FC = () => {
 				<div className="pc-header-center">
 					<div className="pc-header-search">
 						<Search size={18} strokeWidth={1.75} className="search-icon" />
-						<input type="text" placeholder="Tìm kiếm bác sĩ, hồ sơ..." />
+						<input 
+							type="text" 
+							placeholder="Tìm kiếm bác sĩ, chuyên môn..." 
+							value={searchText}
+							onChange={(e) => setSearchText(e.target.value)}
+						/>
 					</div>
 				</div>
 				<div className="pc-header-actions">
@@ -154,7 +167,7 @@ const QuanLyBacSi: React.FC = () => {
 						<div className="icon-top" style={{ color: '#10B981', background: '#D1FAE5', padding: '8px', borderRadius: '50%', display: 'inline-flex' }}>
 							<ShieldCheck size={24} />
 						</div>
-						<h1>42</h1>
+						<h1>{activeDoctorsCount}</h1>
 						<p>Bác Sĩ Đang Hoạt Động</p>
 					</div>
 
@@ -162,7 +175,7 @@ const QuanLyBacSi: React.FC = () => {
 						<div className="icon-top" style={{ color: '#B91C1C', background: '#FEE2E2', padding: '8px', borderRadius: '50%', display: 'inline-flex' }}>
 							<Asterisk size={24} />
 						</div>
-						<h1>12</h1>
+						<h1>{onDutyCount}</h1>
 						<p>Đang Trực Hôm Nay</p>
 					</div>
 				</div>
@@ -348,37 +361,31 @@ const QuanLyBacSi: React.FC = () => {
 				onCancel={() => setIsFilterModalOpen(false)}
 				footer={[
 					<Button key="reset" onClick={() => {
-						filterForm.resetFields();
 						setSpecializationFilter('Tất cả');
 						setIsFilterModalOpen(false);
 					}}>
 						Xóa bộ lọc
 					</Button>,
-					<Button key="submit" type="primary" onClick={() => filterForm.submit()}>
+					<Button key="submit" type="primary" onClick={() => setIsFilterModalOpen(false)}>
 						Áp dụng
 					</Button>
 				]}
 				destroyOnClose
 			>
-				<Form
-					form={filterForm}
-					layout="vertical"
-					initialValues={{ specialization: specializationFilter }}
-					onFinish={(values) => {
-						setSpecializationFilter(values.specialization || 'Tất cả');
-						setIsFilterModalOpen(false);
-					}}
-				>
-					<Form.Item name="specialization" label="Chuyên môn">
-						<Select>
-							<Select.Option value="Tất cả">Tất cả</Select.Option>
-							<Select.Option value="Nội khoa thú y">Nội khoa thú y</Select.Option>
-							<Select.Option value="Ngoại khoa & Phẫu thuật">Ngoại khoa & Phẫu thuật</Select.Option>
-							<Select.Option value="Da liễu & Dinh dưỡng">Da liễu & Dinh dưỡng</Select.Option>
-							<Select.Option value="Nha khoa">Nha khoa</Select.Option>
-						</Select>
-					</Form.Item>
-				</Form>
+				<div>
+					<p style={{ marginBottom: 8, fontWeight: 500 }}>Chuyên môn</p>
+					<Select 
+						style={{ width: '100%' }} 
+						value={specializationFilter}
+						onChange={(val) => setSpecializationFilter(val)}
+					>
+						<Select.Option value="Tất cả">Tất cả</Select.Option>
+						<Select.Option value="Nội khoa thú y">Nội khoa thú y</Select.Option>
+						<Select.Option value="Ngoại khoa & Phẫu thuật">Ngoại khoa & Phẫu thuật</Select.Option>
+						<Select.Option value="Da liễu & Dinh dưỡng">Da liễu & Dinh dưỡng</Select.Option>
+						<Select.Option value="Nha khoa">Nha khoa</Select.Option>
+					</Select>
+				</div>
 			</Modal>
 
 			{/* Modal Lịch trình tổng quát */}

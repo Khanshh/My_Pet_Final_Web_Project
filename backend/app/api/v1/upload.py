@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
-from app.core.dependencies import admin_only
+from app.core.dependencies import get_current_user
 from app.core.file_upload import ALLOWED_IMAGE_TYPES, MAX_FILE_SIZE
 import uuid
 import os
@@ -12,7 +12,7 @@ from app.core.config import UPLOAD_DIR
 UPLOAD_AVATAR_DIR = UPLOAD_DIR / "avatars"
 UPLOAD_FILE_DIR = UPLOAD_DIR / "files"
 
-@router.post("/avatar", dependencies=[Depends(admin_only)])
+@router.post("/avatar", dependencies=[Depends(get_current_user)])
 async def upload_avatar(file: UploadFile = File(...)):
     if file.content_type not in ALLOWED_IMAGE_TYPES:
         raise HTTPException(status_code=400, detail="Chỉ hỗ trợ upload hình ảnh (jpg, png, webp, gif)")

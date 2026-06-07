@@ -285,22 +285,13 @@ const TrangChu = () => {
 	// ─── Real Data Logic ────────────────────────
 
 	const getAppointmentSeries = () => {
-		if (!stats) return [{ name: 'Lịch hẹn', data: [0, 0, 0, 0, 0, 0, 0] }];
-
-		const base = Math.max(10, Math.floor(stats.total_appointments / 4));
-		if (filterPeriod === '7 days') {
-			return [{ name: 'Lịch hẹn', data: [base - 2, base + 4, base - 1, base + 7, base + 2, base + 8, base + 1] }];
-		} else if (filterPeriod === '30 days') {
-			return [{ name: 'Lịch hẹn', data: [base * 2, base * 2.5, base * 1.8, base * 3, base * 2.2, base * 3.5, base * 2.8] }];
-		}
-		return [{ name: 'Lịch hẹn', data: [base * 5, base * 6, base * 4, base * 7, base * 5.5, base * 8, base * 6.5] }];
+		if (!stats || !stats.appointment_chart) return [{ name: 'Lịch hẹn', data: [0, 0, 0, 0, 0, 0, 0] }];
+		return [{ name: 'Lịch hẹn', data: stats.appointment_chart.data }];
 	};
 
 	const getGrowthSeries = () => {
-		if (!stats) return [{ name: 'Khách hàng', data: [0, 0, 0, 0, 0, 0] }];
-
-		const base = Math.max(5, Math.floor(stats.total_owners / 3));
-		return [{ name: 'Khách hàng', data: [base - 2, base, base + 3, base + 5, base + 8, base + 12] }];
+		if (!stats || !stats.growth_chart) return [{ name: 'Khách hàng', data: [0, 0, 0, 0, 0, 0] }];
+		return [{ name: 'Khách hàng', data: stats.growth_chart.data }];
 	};
 
 	const displayedNotifs = recentActivities.filter(item =>
@@ -312,9 +303,15 @@ const TrangChu = () => {
 		...appointmentChartOptions,
 		xaxis: {
 			...appointmentChartOptions.xaxis,
-			categories: filterPeriod === '7 days' ? ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'] :
-				filterPeriod === '30 days' ? ['Tuần 1', 'Tuần 2', 'Tuần 3', 'Tuần 4', 'Tuần 5', 'Tuần 6', 'Tuần 7'] :
-					['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7']
+			categories: stats?.appointment_chart?.categories || ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN']
+		}
+	};
+
+	const dynamicGrowthChartOptions: ApexCharts.ApexOptions = {
+		...growthChartOptions,
+		xaxis: {
+			...growthChartOptions.xaxis,
+			categories: stats?.growth_chart?.categories || ['Th1', 'Th2', 'Th3', 'Th4', 'Th5', 'Th6']
 		}
 	};
 
@@ -452,7 +449,7 @@ const TrangChu = () => {
 						</div>
 					</div>
 					<div className="pc-card-body">
-						<Chart options={growthChartOptions} series={getGrowthSeries()} type="bar" height={280} />
+						<Chart options={dynamicGrowthChartOptions} series={getGrowthSeries()} type="bar" height={280} />
 					</div>
 				</div>
 

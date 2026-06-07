@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Avatar, Button, Card, message, Input, Select, Empty } from 'antd';
+import { Row, Col, Avatar, Button, message, Input, Select, Empty } from 'antd';
 import {
     ClipboardList,
     Search,
@@ -19,7 +19,8 @@ const UserHoSoBenhAn: React.FC = () => {
     const [records, setRecords] = useState<any[]>([]);
     const [pets, setPets] = useState<Pet[]>([]);
     const [selectedPet, setSelectedPet] = useState<string | null>(null);
-
+    const [searchQuery, setSearchQuery] = useState('');
+    const [visibleCount, setVisibleCount] = useState(5);
 
     const fetchData = async () => {
         try {
@@ -38,25 +39,25 @@ const UserHoSoBenhAn: React.FC = () => {
         fetchData();
     }, []);
 
-    const filteredRecords = selectedPet
-        ? records.filter(r => r.pet_id === selectedPet)
-        : records;
+    const filteredRecords = records.filter(r => {
+        if (selectedPet && r.pet_id !== selectedPet) return false;
+        if (searchQuery && !r.diagnosis?.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+        return true;
+    });
 
     return (
         <div className={styles.hoSoPage}>
             <header className={styles.pageHeader}>
                 <div className={styles.titleArea}>
-                    <h1>Hộ chiếu sức khỏe 🏥</h1>
+                    <h1><ClipboardList size={28} /> Hồ sơ sức khỏe</h1>
                     <p>Lịch sử y khoa và chẩn đoán chi tiết từ các chuyên gia.</p>
                 </div>
                 <div className={styles.filterArea}>
                     <Select
                         placeholder="Chọn thú cưng"
                         allowClear
-                        style={{ width: 220 }}
                         className={styles.petSelect}
                         onChange={setSelectedPet}
-                        size="large"
                     >
                         {pets.map(pet => (
                             <Select.Option key={pet.id} value={pet.id}>
@@ -67,50 +68,54 @@ const UserHoSoBenhAn: React.FC = () => {
                         ))}
                     </Select>
                     <Input
-                        placeholder="Tìm kiếm chẩn đoán..."
-                        prefix={<Search size={18} />}
+                        placeholder="Tìm kiếm bệnh án..."
+                        prefix={<Search size={16} />}
                         className={styles.searchBar}
-                        size="large"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
                     />
                 </div>
             </header>
 
             <Row gutter={[24, 24]}>
-                <Col xs={{ span: 24, order: 2 }} lg={{ span: 16, order: 1 }}>
+                <Col xs={{ span: 24, order: 1 }} lg={{ span: 16, order: 1 }}>
                     <div className={styles.recordList}>
                         {filteredRecords.length > 0 ? (
                             <>
-                                {filteredRecords.map(record => (
+                                {filteredRecords.slice(0, visibleCount).map(record => (
                                     <div key={record.id} className={styles.recordCard}>
                                         <div className={styles.cardHeader}>
-                                            <div className={styles.dateInfo}>
-                                                <Calendar size={14} />
-                                                <span>{new Date(record.recorded_at).toLocaleDateString('vi-VN')} - {new Date(record.recorded_at).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}</span>
+                                            <div className={styles.datePill}>
+                                                <Calendar size={12} />
+                                                <span>{new Date(record.recorded_at).toLocaleDateString('vi-VN')} {new Date(record.recorded_at).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}</span>
                                             </div>
-                                            <div className={styles.diagBadge}>Khám định kỳ</div>
+                                            <Activity size={16} className={styles.examIcon} />
                                         </div>
                                         <h3 className={styles.diagnosisTitle}>{record.diagnosis}</h3>
-                                        <div className={styles.doctorInfo}>
-                                            <Stethoscope size={14} />
-                                            <span>BS. {record.vet?.user?.full_name || 'Hệ thống'}</span>
-                                        </div>
-                                        <div className={styles.treatmentBox}>
-                                            <div className={styles.treatmentLabel}>
-                                                <FileText size={14} />
-                                                <strong>Điều trị:</strong>
+                                        
+                                        <div className={styles.inlineInfo}>
+                                            <div className={styles.infoItem}>
+                                                <Stethoscope size={14} />
+                                                <span>BS. {record.vet?.user?.full_name || 'Hệ thống'}</span>
                                             </div>
-                                            <p className={styles.treatmentText}>{record.treatment}</p>
+                                            <div className={styles.infoItem}>
+                                                <FileText size={14} />
+                                                <span>{record.treatment}</span>
+                                            </div>
                                         </div>
+
                                         {record.notes && (
-                                            <div className={styles.notesBox}>
-                                                {record.notes}
+                                            <div className={styles.notesText}>
+                                                {record.notes.replace(/https?:\/\/[^\s]+/g, '[Ảnh đính kèm]')}
                                             </div>
                                         )}
                                     </div>
                                 ))}
-                                <div className={styles.loadMoreWrap}>
-                                    <Button type="text" className={styles.btnLoadMore}>Tải thêm lịch sử...</Button>
-                                </div>
+                                {visibleCount < filteredRecords.length && (
+                                    <div className={styles.loadMoreWrap}>
+                                        <a className={styles.linkLoadMore} onClick={() => setVisibleCount(prev => prev + 5)}>Xem thêm</a>
+                                    </div>
+                                )}
                             </>
                         ) : (
                             <div className={styles.emptyState}>
@@ -123,32 +128,34 @@ const UserHoSoBenhAn: React.FC = () => {
                     </div>
                 </Col>
 
-                <Col xs={{ span: 24, order: 1 }} lg={{ span: 8, order: 2 }}>
-                    <Card className={styles.summaryCard} bordered={false}>
+                <Col xs={{ span: 24, order: 2 }} lg={{ span: 8, order: 2 }}>
+                    <div className={styles.sidebar}>
                         <div className={styles.summaryHeader}>
-                            <HeartPulse size={20} color="#c8960c" />
+                            <HeartPulse size={20} />
                             <h3>Chỉ số tổng quát</h3>
                         </div>
-                        <div className={styles.metricList}>
+                        <div className={styles.metricRow}>
                             <div className={styles.metricItem}>
-                                <span className={styles.metricLabel}>Số lần thăm khám</span>
+                                <span className={styles.metricLabel}>Số lần khám</span>
                                 <span className={styles.metricValue}>{filteredRecords.length}</span>
                             </div>
-                            <div className={styles.metricSeparator} />
                             <div className={styles.metricItem}>
-                                <span className={styles.metricLabel}>Lần cuối khám</span>
+                                <span className={styles.metricLabel}>Lần cuối</span>
                                 <span className={styles.metricValue}>{filteredRecords[0] ? new Date(filteredRecords[0].recorded_at).toLocaleDateString('vi-VN') : 'N/A'}</span>
                             </div>
                         </div>
-                        <div className={styles.ctaBox}>
-                            <p>Cần tư vấn thêm về kết quả chẩn đoán?</p>
-                            <Button block className={styles.btnChat} onClick={() => history.push(`/khach-hang/tu-van`)}>Trò chuyện với bác sĩ</Button>
-                        </div>
-                    </Card>
+                        
+                        <Button block className={styles.btnChat} onClick={() => history.push(`/khach-hang/tu-van`)}>
+                            <MessageCircle size={18} /> Trò chuyện với bác sĩ
+                        </Button>
 
-                    <div className={styles.infoBox} style={{ marginTop: 24 }}>
-                        <h4><Activity size={18} /> Lưu ý sức khỏe</h4>
-                        <p>Theo dõi sát sao cân nặng và chế độ dinh dưỡng sau khi điều trị.</p>
+                        <div className={styles.infoBox}>
+                            <h4>Lưu ý sức khỏe</h4>
+                            <ul>
+                                <li>Theo dõi sát sao cân nặng và chế độ dinh dưỡng sau khi điều trị.</li>
+                                <li>Đảm bảo thú cưng uống đủ nước mỗi ngày.</li>
+                            </ul>
+                        </div>
                     </div>
                 </Col>
             </Row>

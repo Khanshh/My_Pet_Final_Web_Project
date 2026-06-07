@@ -75,24 +75,7 @@ const LoginWithCredentials: React.FC = () => {
 				Tiếp tục trải nghiệm
 			</Button>
 
-			<Button
-				type="default"
-				block
-				size="large"
-				style={{ marginTop: 12, borderRadius: 12 }}
-				onClick={() => {
-					localStorage.setItem('token', 'mock-token-for-dev');
-					localStorage.setItem('currentUser', JSON.stringify({
-						name: 'Admin Mock',
-						email: 'admin@gmail.com',
-						realm_access: { roles: ['admin'] }
-					}));
-					message.success('Đã bypass đăng nhập (Chế độ Dev)');
-					window.location.href = '/dashboard';
-				}}
-			>
-				Bypass Login (Dành cho Dev)
-			</Button>
+
 		</Form>
 	);
 };

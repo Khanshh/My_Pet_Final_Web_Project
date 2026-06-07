@@ -10,6 +10,7 @@ import {
   sendMessage,
   sendMessageWithAttachment,
 } from '@/services/messageService';
+import { ip3 } from '@/utils/ip';
 import styles from './index.less';
 
 const EMOJI_LIST = ['😀', '😂', '🥰', '😍', '😎', '😭', '😡', '👍', '👎', '❤️', '🔥', '🎉', '🐶', '🐱', '🏥'];
@@ -221,15 +222,15 @@ const PhanHoi: React.FC = () => {
                       )}
                       <div className={`${styles.bubble} ${isMe ? styles.bubbleMine : styles.bubbleTheirs}`}>
                         <div className={styles.bubbleContent}>
-                          {isImage && msg.attachment_url ? (
+                          {isImage && msg.attachments?.[0]?.file_url ? (
                             <div>
-                                <img src={`http://localhost:8000${msg.attachment_url}`} alt="attachment" style={{ maxWidth: 200, borderRadius: 8, marginBottom: 8 }} />
+                                <img src={`${ip3}${msg.attachments[0].file_url.replace(/^\//, '')}`} alt="attachment" style={{ maxWidth: 200, borderRadius: 8, marginBottom: 8 }} />
                                 {msg.content && <div>{msg.content}</div>}
                             </div>
-                          ) : isFile && msg.attachment_url ? (
+                          ) : isFile && msg.attachments?.[0]?.file_url ? (
                             <div>
-                                <a href={`http://localhost:8000${msg.attachment_url}`} target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(0,0,0,0.05)', padding: '8px 12px', borderRadius: 8, textDecoration: 'none', color: 'inherit' }}>
-                                    <Paperclip size={16} /> Tải tệp đính kèm
+                                <a href={`${ip3}${msg.attachments[0].file_url.replace(/^\//, '')}`} target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(0,0,0,0.05)', padding: '8px 12px', borderRadius: 8, textDecoration: 'none', color: 'inherit' }}>
+                                    <Paperclip size={16} /> {msg.attachments[0].file_name || 'Tải tệp đính kèm'}
                                 </a>
                                 {msg.content && <div style={{ marginTop: 8 }}>{msg.content}</div>}
                             </div>
@@ -282,7 +283,12 @@ const PhanHoi: React.FC = () => {
                     <button className={styles.attachBtn} onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
                         <Smile size={22} />
                     </button>
-                    <button className={styles.attachBtn} onClick={() => fileInputRef.current?.click()}>
+                    <button className={styles.attachBtn} onClick={() => {
+                        if (fileInputRef.current) {
+                            fileInputRef.current.removeAttribute("accept");
+                            fileInputRef.current.click();
+                        }
+                    }}>
                         <Paperclip size={20} />
                     </button>
                     <button className={styles.attachBtn} onClick={() => {

@@ -179,6 +179,11 @@ export default [
 				component: '@/pages/KhachHang/TuVan/PhanHoi/index',
 				hideInMenu: true,
 			},
+			{
+				name: 'Hồ sơ cá nhân',
+				path: '/khach-hang/ho-so',
+				component: './KhachHang/HoSoCaNhan',
+			},
 		],
 	},
 

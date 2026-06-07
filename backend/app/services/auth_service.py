@@ -185,6 +185,13 @@ async def update_user_profile(db: AsyncSession, user: User, data: UserUpdate) ->
     """
     if data.full_name is not None:
         user.full_name = data.full_name
+    if data.email is not None and data.email != user.email:
+        from fastapi import HTTPException, status
+        from sqlalchemy import select
+        existing = await db.execute(select(User).where(User.email == data.email))
+        if existing.scalar_one_or_none():
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email đã được sử dụng")
+        user.email = data.email
     if data.phone is not None:
         user.phone = data.phone
     if data.password is not None:

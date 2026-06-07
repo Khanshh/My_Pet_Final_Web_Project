@@ -59,12 +59,7 @@ export async function sendMessageWithAttachment(conversationId: string, file: Fi
 
   const res = await axios.post(
     `${API}/messages/conversations/${conversationId}/messages/upload`,
-    formData,
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    }
+    formData
   );
   return res.data;
 }
